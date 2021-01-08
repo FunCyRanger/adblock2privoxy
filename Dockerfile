@@ -32,7 +32,7 @@ RUN apk --no-cache --update add git && \
 
 # add installation of apache2
 # modify httpd-conf 4 privoxy
-RUN apk --no-cache --update add apache2 git && \
+RUN apk --no-cache --update add apache2 && \
     sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /usr/local/apache2/conf/httpd.conf && \
     echo ' \
 <VirtualHost *:80> \
