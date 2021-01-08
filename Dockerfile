@@ -49,4 +49,4 @@ RUN apk add apache2 && \
     rm -R /tmp/adblock2privoxy && \
     chmod 777 -R /var/www/localhost/htdocs/ && \
     cat /etc/apache2/httpd.conf
- # RUN httpd
+RUN httpd
