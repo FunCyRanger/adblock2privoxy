@@ -2,9 +2,9 @@ name: Haskell CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ test ]
   pull_request:
-    branches: [ master ]
+    branches: [ test ]
 
   schedule:
     - cron: "0 0 5 * *"
@@ -31,6 +31,7 @@ jobs:
 
     - name: Run exec
       working-directory: adblock2privoxy
+      # change this for adding new filter-files, other path to css-files (-w) or other host name (-d)
       run: stack exec adblock2privoxy -- -p ../privoxy -d my-apache4privoxy/privoxy -w ../css
             https://raw.githubusercontent.com/abp-filters/abp-filters-anti-cv/master/german.txt 
             https://raw.githubusercontent.com/abp-filters/abp-filters-anti-cv/master/english.txt 
@@ -49,6 +50,5 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        # branch: ${{ github.ref }}
-        branch: master
+        branch: ${{ github.ref }}
         directory: 'privoxy'
