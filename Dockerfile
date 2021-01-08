@@ -43,4 +43,4 @@ RUN apk add apache2 && \
     echo -E 'httpd' >> /usr/bin/start.sh && \
     chmod 750 /usr/bin/start.sh && \
     /bin/sh -c /usr/bin/start.sh
-CMD ["/bin/sh -c /usr/bin/start.sh"]
+CMD ['/bin/sh -c /usr/bin/start.sh']
