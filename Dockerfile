@@ -26,7 +26,7 @@ CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config"]
 # modify httpd-conf 4 privoxy
 RUN apk add apache2 && \
     sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf && \
-    echo ' \
+    echo -e ' \
 <VirtualHost *:80> \
       #ab2p css domain name (optional, should be equal to --domainCSS parameter) ( \
       ServerName my-apache4privoxy \
@@ -42,7 +42,7 @@ RUN apk add apache2 && \
       # if it is unavailable - get CSS for parent domain  \
       RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f  \
       RewriteRule (^.*/+)[^/]+/+ab2p.css$ $1ab2p.css [N]  \
-</$VirtualHost>' >> /etc/apache2/httpd.conf  && \
+</VirtualHost>' >> /etc/apache2/httpd.conf  && \
     apk add git && \
     git clone https://github.com/FunCyRanger/adblock2privoxy.git -b genfiles /tmp/adblock2privoxy && \
     mv /tmp/adblock2privoxy/css/ /var/www/localhost/htdocs/css && \
