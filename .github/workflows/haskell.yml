@@ -46,7 +46,6 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add -A
         git commit -m "Add changes" -a
-        git remote remove genfiles
     - name: Delete old branch
       run: git remote remove genfiles
       continue-on-error: true
