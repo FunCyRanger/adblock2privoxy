@@ -23,7 +23,8 @@ ENTRYPOINT ["privoxy"]
 CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config"]
 
 # get css files from repo
-RUN cd /tmp && \
+RUN apk --no-cache --update add git && \
+    cd /tmp && \
     git clone https://github.com/FunCyRanger/adblock2privoxy.git -b genfiles && \
     mv ./adblock2privoxy/css/ /usr/local/apache2/htdocs/css && \
     rm -R adblock2privoxy && \
