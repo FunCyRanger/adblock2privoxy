@@ -55,3 +55,4 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: genfiles
         directory: 'privoxy'
+        force:  true
