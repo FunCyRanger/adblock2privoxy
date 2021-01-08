@@ -26,7 +26,7 @@ CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config"]
 RUN cd /tmp && \
     git clone https://github.com/FunCyRanger/adblock2privoxy.git -b genfiles && \
     mv ./adblock2privoxy/css/ /usr/local/apache2/htdocs/css && \
-    rm -R adblock2privoxy
+    rm -R adblock2privoxy && \
     chmod 777 -R /usr/local/apache2/htdocs
 
 # add installation of apache2
