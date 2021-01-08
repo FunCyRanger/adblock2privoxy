@@ -24,7 +24,7 @@ CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config"]
 
 # add installation of apache2
 # modify httpd-conf 4 privoxy
-RUN apk add apache2
+RUN apk add apache2 && \
     sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf && \
     echo ' \
 <VirtualHost *:80> \
@@ -43,6 +43,7 @@ RUN apk add apache2
       RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f \
       RewriteRule (^.*/+)[^/]+/+ab2p.css$ $1ab2p.css [N] \
 </VirtualHost>' >> /etc/apache2/httpd.conf  && \
+    httpd  && \
 
     apk add git && \
     git clone https://github.com/FunCyRanger/adblock2privoxy.git -b genfiles /tmp/adblock2privoxy && \
