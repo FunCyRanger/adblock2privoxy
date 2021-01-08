@@ -28,7 +28,7 @@ RUN apk --no-cache --update add apache2 && \
     http-foreground -S && \
     http-foreground -M
 
-RUN sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /usr/local/apache2/conf/httpd.conf && \
+RUN sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf && \
     echo ' \
 <VirtualHost *:80> \
       #ab2p css domain name (optional, should be equal to --domainCSS parameter) ( \
@@ -45,16 +45,14 @@ RUN sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /usr/loca
       # if it is unavailable - get CSS for parent domain \
       RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f \
       RewriteRule (^.*/+)[^/]+/+ab2p.css$ $1ab2p.css [N] \
-</VirtualHost>' > /usr/local/apache2/conf/httpd.conf
-
+</VirtualHost>' > /etc/apache2/httpd.conf
 
 # get css files from repo
 RUN apk --no-cache --update add git
 RUN git clone https://github.com/FunCyRanger/adblock2privoxy.git -b genfiles /tmp/adblock2privoxy
 RUN ls /tmp/adblock2privoxy
-RUN mkdir /usr/local/apache2/htdocs/css
-RUN cp -R /tmp/adblock2privoxy/css/ /usr/local/apache2/htdocs/css
+RUN mv /tmp/adblock2privoxy/css/ /var/www/localhost/htdocs/css
 RUN rm -R /tmp/adblock2privoxy
-RUN chmod 777 -R /usr/local/apache2/htdocs
+RUN chmod 777 -R /var/www/localhost/htdocs/
 
 RUN httpd-foreground
