@@ -17,16 +17,15 @@ RUN apk --no-cache --update add privoxy wget ca-certificates sed bash && \
     echo 'actionsfile ab2p.system.action' >> /etc/privoxy/config && \
     echo 'actionsfile ab2p.action' >> /etc/privoxy/config && \
     echo 'filterfile ab2p.system.filter' >> /etc/privoxy/config && \
-    echo 'filterfile ab2p.filter' >> /etc/privoxy/config
-RUN chown privoxy.privoxy /etc/privoxy/*
+    echo 'filterfile ab2p.filter' >> /etc/privoxy/config && \
+    chown privoxy.privoxy /etc/privoxy/*
 ENTRYPOINT ["privoxy"]
 CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config"]
 
 # add installation of apache2
 # modify httpd-conf 4 privoxy
 RUN apk add apache2
-
-RUN sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf && \
+    sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf && \
     echo ' \
 <VirtualHost *:80> \
       #ab2p css domain name (optional, should be equal to --domainCSS parameter) ( \
@@ -43,14 +42,12 @@ RUN sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apac
       # if it is unavailable - get CSS for parent domain \
       RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f \
       RewriteRule (^.*/+)[^/]+/+ab2p.css$ $1ab2p.css [N] \
-</VirtualHost>' > /etc/apache2/httpd.conf
+</VirtualHost>' > /etc/apache2/httpd.conf  && \
 
-# get css files from repo
-RUN apk add git
-RUN git clone https://github.com/FunCyRanger/adblock2privoxy.git -b genfiles /tmp/adblock2privoxy
-RUN ls /tmp/adblock2privoxy
-RUN mv /tmp/adblock2privoxy/css/ /var/www/localhost/htdocs/css
-RUN rm -R /tmp/adblock2privoxy
-RUN chmod 777 -R /var/www/localhost/htdocs/
+    apk add git && \
+    git clone https://github.com/FunCyRanger/adblock2privoxy.git -b genfiles /tmp/adblock2privoxy && \
+    mv /tmp/adblock2privoxy/css/ /var/www/localhost/htdocs/css && \
+    rm -R /tmp/adblock2privoxy && \
+    chmod 777 -R /var/www/localhost/htdocs/
 
 # RUN rc-service apache2 start
