@@ -26,7 +26,7 @@ CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config"]
 # modify httpd-conf 4 privoxy
 RUN apk add apache2 && \
     sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf && \
-    echo '
+    echo ' \
 <VirtualHost *:80> \
       #ab2p css domain name (optional, should be equal to --domainCSS parameter) ( \
       ServerName my-apache4privoxy \
