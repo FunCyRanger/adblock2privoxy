@@ -2,9 +2,9 @@ name: Haskell CI
 
 on:
   push:
-    branches: [ test ]
+    branches: [ master ]
   pull_request:
-    branches: [ test ]
+    branches: [ master ]
 
   schedule:
     - cron: "0 0 5 * *"
@@ -46,9 +46,11 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add -A
         git commit -m "Add changes" -a
+        
     - name: Delete old branch
       run: git remote remove genfiles
       continue-on-error: true
+      
     - name: Push privoxy files
       uses: ad-m/github-push-action@master
       with:
@@ -56,6 +58,7 @@ jobs:
         branch: genfiles
         directory: 'privoxy'
         force:  true
+    
     - name: Push css files
       uses: ad-m/github-push-action@master
       with:
