@@ -19,8 +19,6 @@ RUN apk --no-cache --update add privoxy wget ca-certificates sed bash && \
     echo 'filterfile ab2p.system.filter' >> /etc/privoxy/config && \
     echo 'filterfile ab2p.filter' >> /etc/privoxy/config && \
     chown privoxy.privoxy /etc/privoxy/*
-# ENTRYPOINT ["privoxy"]
-# CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config"]
 
 # add installation of apache2
 # modify httpd-conf 4 privoxy
@@ -39,7 +37,7 @@ RUN apk add apache2 && \
     mv /tmp/adblock2privoxy/css/ /var/www/localhost/htdocs/privoxy && \
     rm -R /tmp/adblock2privoxy && \
     chmod 777 -R /var/www/localhost/htdocs/ && \
-    cat /etc/apache2/httpd.conf && \
+    apk rm git wget && \
     echo -E 'privoxy --no-daemon --user privoxy /etc/privoxy/config' >> start.sh && \
     echo -E 'httpd' >> start.sh
 ENTRYPOINT start.sh
