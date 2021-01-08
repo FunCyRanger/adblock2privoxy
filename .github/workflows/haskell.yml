@@ -49,10 +49,17 @@ jobs:
     - name: Delete old branch
       run: git remote remove genfiles
       continue-on-error: true
-    - name: Push changes
+    - name: Push privoxy files
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: genfiles
         directory: 'privoxy'
+        force:  true
+    - name: Push css files
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: genfiles
+        directory: 'css'
         force:  true
