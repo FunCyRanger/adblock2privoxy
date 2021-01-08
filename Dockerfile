@@ -46,6 +46,8 @@ RUN sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apac
       RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f \
       RewriteRule (^.*/+)[^/]+/+ab2p.css$ $1ab2p.css [N] \
 </VirtualHost>' > /etc/apache2/httpd.conf
+RUN http-foreground -S && \
+    http-foreground -M
 
 # get css files from repo
 RUN apk --no-cache --update add git
