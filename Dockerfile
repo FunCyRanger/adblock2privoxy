@@ -35,7 +35,7 @@ RUN sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apac
       ServerName my-apache4privoxy \
       \
       #root = --webDir parameter value  \
-      DocumentRoot /usr/local/apache2/htdocs \
+      DocumentRoot /var/www/localhost/htdocs \
       \
       RewriteEngine on \
       \
