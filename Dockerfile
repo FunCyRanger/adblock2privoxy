@@ -24,6 +24,7 @@ RUN apk --no-cache --update add privoxy wget ca-certificates sed bash && \
 # modify httpd-conf 4 privoxy
 RUN apk add apache2 && \
     sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf && \
+    sed -i'' 's/#ServerName www.example.com:80/ServerName localhost:80/' /etc/apache2/httpd.conf && \
     echo -E '<VirtualHost *:80>'  >> /etc/apache2/httpd.conf  && \
     echo -E '  ServerName my-apache4privoxy'  >> /etc/apache2/httpd.conf  && \
     echo -E '  DocumentRoot /var/www/localhost/htdocs'  >> /etc/apache2/httpd.conf  && \
@@ -42,5 +43,4 @@ RUN apk add apache2 && \
     echo -E 'httpd' >> /usr/bin/start.sh && \
     chmod 750 /usr/bin/start.sh && \
     /bin/sh -c /usr/bin/start.sh
-ENTRYPOINT ["/bin/sh -c"]
-CMD ["/usr/bin/start.sh"]
+CMD ["/bin/sh -c /usr/bin/start.sh"]
