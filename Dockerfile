@@ -5,10 +5,10 @@ EXPOSE 8118
 HEALTHCHECK --interval=30s --timeout=3s CMD nc -z localhost 8118
 RUN apk --no-cache --update add privoxy wget ca-certificates sed bash && \
     cd /etc/privoxy && \
-    wget https://raw.githubusercontent.com/FunCyRanger/adblock2privoxy/master/privoxy/ab2p.action && \
-    wget https://raw.githubusercontent.com/FunCyRanger/adblock2privoxy/master/privoxy/ab2p.filter && \
-    wget https://raw.githubusercontent.com/FunCyRanger/adblock2privoxy/master/privoxy/ab2p.system.action && \
-    wget https://raw.githubusercontent.com/FunCyRanger/adblock2privoxy/master/privoxy/ab2p.system.filter && \
+    wget https://raw.githubusercontent.com/FunCyRanger/adblock2privoxy/genfiles/privoxy/ab2p.action && \
+    wget https://raw.githubusercontent.com/FunCyRanger/adblock2privoxy/genfiles/privoxy/ab2p.filter && \
+    wget https://raw.githubusercontent.com/FunCyRanger/adblock2privoxy/genfiles/privoxy/ab2p.system.action && \
+    wget https://raw.githubusercontent.com/FunCyRanger/adblock2privoxy/genfiles/privoxy/ab2p.system.filter && \
     sed -i'' 's/127\.0\.0\.1:8118/0\.0\.0\.0:8118/' /etc/privoxy/config && \
     sed -i'' 's/enable-edit-actions\ 0/enable-edit-actions\ 1/' /etc/privoxy/config && \
     sed -i'' 's/#max-client-connections/max-client-connections/' /etc/privoxy/config && \
@@ -53,4 +53,4 @@ RUN mv /tmp/adblock2privoxy/css/ /var/www/localhost/htdocs/css
 RUN rm -R /tmp/adblock2privoxy
 RUN chmod 777 -R /var/www/localhost/htdocs/
 
-RUN rc-service apache2 start
+# RUN rc-service apache2 start
