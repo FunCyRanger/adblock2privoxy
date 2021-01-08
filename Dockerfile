@@ -48,3 +48,4 @@ RUN apk add apache2 && \
     mv /tmp/adblock2privoxy/css/ /var/www/localhost/htdocs/privoxy && \
     rm -R /tmp/adblock2privoxy && \
     chmod 777 -R /var/www/localhost/htdocs/
+ RUN httpd
