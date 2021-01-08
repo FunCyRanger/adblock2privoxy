@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ generated_files ]
+    branches: [ genfiles ]
   pull_request:
-    branches: [ generated_files ]
+    branches: [ genfiles ]
 
 jobs:
 
