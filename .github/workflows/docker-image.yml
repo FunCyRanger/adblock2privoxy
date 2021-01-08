@@ -5,7 +5,9 @@ on:
     branches: [ genfiles ]
   pull_request:
     branches: [ genfiles ]
-
+  create:
+    branches: [ genfiles ]
+    
 jobs:
 
   build:
