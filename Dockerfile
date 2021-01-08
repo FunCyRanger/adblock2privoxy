@@ -47,5 +47,4 @@ RUN apk add apache2 && \
     git clone https://github.com/FunCyRanger/adblock2privoxy.git -b genfiles /tmp/adblock2privoxy && \
     mv /tmp/adblock2privoxy/css/ /var/www/localhost/htdocs/css && \
     rm -R /tmp/adblock2privoxy && \
-    chmod 777 -R /var/www/localhost/htdocs/ && \
-    httpd
+    chmod 777 -R /var/www/localhost/htdocs/
