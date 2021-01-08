@@ -43,12 +43,10 @@ RUN apk add apache2 && \
       RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f  \
       RewriteRule (^.*/+)[^/]+/+ab2p.css$ $1ab2p.css [N]  \
 </VirtualHost>' >> /etc/apache2/httpd.conf  && \
-    httpd  && \
-
     apk add git && \
     git clone https://github.com/FunCyRanger/adblock2privoxy.git -b genfiles /tmp/adblock2privoxy && \
     mv /tmp/adblock2privoxy/css/ /var/www/localhost/htdocs/css && \
     rm -R /tmp/adblock2privoxy && \
     chmod 777 -R /var/www/localhost/htdocs/
-
+#    httpd  && \
 # RUN rc-service apache2 start
