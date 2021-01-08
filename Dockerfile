@@ -37,7 +37,7 @@ RUN apk add apache2 && \
     mv /tmp/adblock2privoxy/css/ /var/www/localhost/htdocs/privoxy && \
     rm -R /tmp/adblock2privoxy && \
     chmod 777 -R /var/www/localhost/htdocs/ && \
-    apk rm git wget && \
-    echo -E 'privoxy --no-daemon --user privoxy /etc/privoxy/config' >> start.sh && \
-    echo -E 'httpd' >> start.sh
-ENTRYPOINT start.sh
+    apk del git wget && \
+    echo -E 'privoxy --no-daemon --user privoxy /etc/privoxy/config' >> /usr/bin/start.sh && \
+    echo -E 'httpd' >> /usr/bin/start.sh
+ENTRYPOINT ["/usr/bin/start.sh"]
