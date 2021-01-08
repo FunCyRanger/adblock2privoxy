@@ -24,9 +24,9 @@ CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config"]
 
 # add installation of apache2
 # modify httpd-conf 4 privoxy
-RUN apk --no-cache --update add apache2 && \
-    http-foreground -S && \
-    http-foreground -M
+RUN apk --no-cache --update add apache2
+RUN httpd-foreground -S && \
+    httpd-foreground -M
 
 RUN sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf && \
     echo ' \
@@ -46,8 +46,8 @@ RUN sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apac
       RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f \
       RewriteRule (^.*/+)[^/]+/+ab2p.css$ $1ab2p.css [N] \
 </VirtualHost>' > /etc/apache2/httpd.conf
-RUN http-foreground -S && \
-    http-foreground -M
+RUN httpd-foreground -S && \
+    httpd-foreground -M
 
 # get css files from repo
 RUN apk --no-cache --update add git
