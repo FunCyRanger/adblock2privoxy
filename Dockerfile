@@ -39,5 +39,7 @@ RUN apk add apache2 && \
     chmod 777 -R /var/www/localhost/htdocs/ && \
     apk del git wget && \
     echo -E 'privoxy --no-daemon --user privoxy /etc/privoxy/config' >> /usr/bin/start.sh && \
-    echo -E 'httpd' >> /usr/bin/start.sh
-ENTRYPOINT ["/usr/bin/start.sh"]
+    echo -E 'httpd' >> /usr/bin/start.sh && \
+    chmod 750 /usr/bin/start.sh
+ENTRYPOINT ["/bin/sh -c"]
+CMD ["/usr/bin/start.sh"]
