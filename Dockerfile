@@ -43,7 +43,7 @@ RUN apk --no-cache --update add apache2 && \
       RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f \
       RewriteRule (^.*/+)[^/]+/+ab2p.css$ $1ab2p.css [N] \
 </VirtualHost>' > /usr/local/apache2/conf/httpd.conf
-RUN httpd-foreground
+
 
 # get css files from repo
 RUN apk --no-cache --update add git
@@ -53,3 +53,5 @@ RUN mkdir /usr/local/apache2/htdocs/css
 RUN cp -R /tmp/adblock2privoxy/css/ /usr/local/apache2/htdocs/css
 RUN rm -R /tmp/adblock2privoxy
 RUN chmod 777 -R /usr/local/apache2/htdocs
+
+RUN httpd-foreground
