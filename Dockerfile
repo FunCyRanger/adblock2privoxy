@@ -24,7 +24,7 @@ CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config"]
 
 # add installation of apache2
 # modify httpd-conf 4 privoxy
-RUN apk --no-cache --update add apache2
+RUN apk add apache2
 RUN httpd-foreground -S && \
     httpd-foreground -M
 
