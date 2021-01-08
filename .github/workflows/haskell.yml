@@ -47,6 +47,9 @@ jobs:
         git add -A
         git commit -m "Add changes" -a
         git remote remove genfiles
+    - name: Delete old branch
+      run: git remote remove genfiles
+      continue-on-error: true
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
