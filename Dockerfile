@@ -25,8 +25,6 @@ CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config"]
 # add installation of apache2
 # modify httpd-conf 4 privoxy
 RUN apk add apache2
-RUN httpd-foreground -S && \
-    httpd-foreground -M
 
 RUN sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf && \
     echo ' \
@@ -46,15 +44,13 @@ RUN sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apac
       RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f \
       RewriteRule (^.*/+)[^/]+/+ab2p.css$ $1ab2p.css [N] \
 </VirtualHost>' > /etc/apache2/httpd.conf
-RUN httpd-foreground -S && \
-    httpd-foreground -M
 
 # get css files from repo
-RUN apk --no-cache --update add git
+RUN apk add git
 RUN git clone https://github.com/FunCyRanger/adblock2privoxy.git -b genfiles /tmp/adblock2privoxy
 RUN ls /tmp/adblock2privoxy
 RUN mv /tmp/adblock2privoxy/css/ /var/www/localhost/htdocs/css
 RUN rm -R /tmp/adblock2privoxy
 RUN chmod 777 -R /var/www/localhost/htdocs/
 
-RUN httpd-foreground
+RUN rc-service apache2 start
