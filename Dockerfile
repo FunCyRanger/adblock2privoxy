@@ -26,7 +26,7 @@ CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config"]
 # modify httpd-conf 4 privoxy
 RUN apk add apache2 && \
     sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf && \
-    echo -e ' \
+    echo -E ' \
 <VirtualHost *:80> \
       #ab2p css domain name (optional, should be equal to --domainCSS parameter) ( \
       ServerName my-apache4privoxy \
@@ -37,7 +37,7 @@ RUN apk add apache2 && \
       RewriteEngine on \
        \
       # first reverse domain names order  \
-      RewriteRule ^/([^/]*?)\.([^/.]+)(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+)$  \
+      RewriteRule ^/([^/]*?)\.([^/.]+)(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?/ab2p.css$ /$9/$8/$7/$6/$5/$4/$3/$2/$1/ab2p.css [N]  \
       # then try to get CSS for current domain  \
       # if it is unavailable - get CSS for parent domain  \
       RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f  \
