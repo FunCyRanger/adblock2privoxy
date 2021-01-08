@@ -22,30 +22,32 @@ RUN chown privoxy.privoxy /etc/privoxy/*
 ENTRYPOINT ["privoxy"]
 CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config"]
 
-# todo: add installation of apache2
+# get css files from repo
+RUN cd /tmp && \
+    git clone https://github.com/FunCyRanger/adblock2privoxy.git -b genfiles && \
+    mv ./adblock2privoxy/css/ /usr/local/apache2/htdocs/css && \
+    rm -R adblock2privoxy
+    chmod 777 -R /usr/local/apache2/htdocs
 
+# add installation of apache2
 # modify httpd-conf 4 privoxy
-
-# RUN echo ' \
-# <VirtualHost *:80> \
-#       #ab2p css domain name (optional, should be equal to --domainCSS parameter) ( \
-#       ServerName my-apache4privoxy \
-#       \
-#       #root = --webDir parameter value  \
-#       DocumentRoot /usr/local/apache2/htdocs \
-#       \
-#       RewriteEngine on \
-#       \
-#       # first reverse domain names order \
-#       RewriteRule ^/([^/]*?)\.([^/.]+)(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+)$ \
-#       # then try to get CSS for current domain \
-#       # if it is unavailable - get CSS for parent domain \
-#       RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f \
-#       RewriteRule (^.*/+)[^/]+/+ab2p.css$ $1ab2p.css [N] \
-# </VirtualHost>' > /usr/local/apache2/conf/httpd.conf
-
-# enable mod_rewrite
-# RUN cp /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/ && \
-#    cp /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled/
-
-# todo: start apache
+RUN apk --no-cache --update add apache2 git && \
+    sed -i'' 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /usr/local/apache2/conf/httpd.conf && \
+    echo ' \
+<VirtualHost *:80> \
+      #ab2p css domain name (optional, should be equal to --domainCSS parameter) ( \
+      ServerName my-apache4privoxy \
+      \
+      #root = --webDir parameter value  \
+      DocumentRoot /usr/local/apache2/htdocs \
+      \
+      RewriteEngine on \
+      \
+      # first reverse domain names order \
+      RewriteRule ^/([^/]*?)\.([^/.]+)(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+))?(?:\.([^/.]+)$ \
+      # then try to get CSS for current domain \
+      # if it is unavailable - get CSS for parent domain \
+      RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f \
+      RewriteRule (^.*/+)[^/]+/+ab2p.css$ $1ab2p.css [N] \
+</VirtualHost>' > /usr/local/apache2/conf/httpd.conf
+CMD ["httpd-foreground"]
