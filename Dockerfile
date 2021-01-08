@@ -25,6 +25,7 @@ CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config"]
 # get css files from repo
 RUN apk --no-cache --update add git
 RUN git clone https://github.com/FunCyRanger/adblock2privoxy.git -b genfiles /tmp/adblock2privoxy
+RUN ls /tmp/adblock2privoxy
 RUN mv /tmp/adblock2privoxy/css/ /usr/local/apache2/htdocs/css
 RUN rm -R /tmp/adblock2privoxy
 RUN chmod 777 -R /usr/local/apache2/htdocs
