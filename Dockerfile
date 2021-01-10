@@ -42,4 +42,5 @@ RUN apk add apache2 && \
     echo -E 'privoxy --user privoxy /etc/privoxy/config' >> /usr/local/bin/start.sh && \
     echo -E 'httpd' >> /usr/local/bin/start.sh && \
     chmod 777 /usr/local/bin/start.sh
-ENTRYPOINT ["start.sh"]
+ENTRYPOINT ["privoxy"]
+CMD ["--no-daemon","--user","privoxy","/etc/privoxy/config", "| httpd"]
