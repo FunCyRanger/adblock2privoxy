@@ -16,8 +16,8 @@ s@.*\sHTTP\/1.*@$&\r\nX-Frame-Options: DENY@i
 CLIENT-HEADER-TAGGER: ab2p-elemhide-check-debug
 s@^cookie:.*ab2p-elemhide-filter-debug=true(?:;|$).*@ab2p-elemhide-filter-debug@Ti
 FILTER: ab2p-elemhide-filter
-s@[^'"\s]\s*<head[^>]*>(?=\s*[^'"\s])@$&<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8119/ab2p.common.css"></link><link rel="stylesheet" type="text/css" href="http://127.0.0.1:8119/$host/ab2p.css"></link>@iUD
+s@[^'"\s]\s*<head[^>]*>(?=\s*[^'"\s])@$&<link rel="stylesheet" type="text/css" href="http://my-apache4privoxy/privoxy/ab2p.common.css"></link><link rel="stylesheet" type="text/css" href="http://my-apache4privoxy/privoxy/$host/ab2p.css"></link>@iUD
 FILTER: ab2p-elemhide-filter-debug
-s@[^'"\s]\s*<head[^>]*>(?=\s*[^'"\s])@$&<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8119/debug/ab2p.common.css"></link><link rel="stylesheet" type="text/css" href="http://127.0.0.1:8119/$host.debug/ab2p.css"></link>@iUD
+s@[^'"\s]\s*<head[^>]*>(?=\s*[^'"\s])@$&<link rel="stylesheet" type="text/css" href="http://my-apache4privoxy/privoxy/debug/ab2p.common.css"></link><link rel="stylesheet" type="text/css" href="http://my-apache4privoxy/privoxy/$host.debug/ab2p.css"></link>@iUD
 FILTER: ab2p-popup-filter
 s@[^'"\s]\s*<head[^>]*>(?=\s*[^'"\s])@$&<script type="text/javascript">parent==window&&opener&&close()</script>@iUD
